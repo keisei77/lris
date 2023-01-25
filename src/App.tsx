@@ -1,34 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import Box from "@mui/material/Box";
+import BottomNavigation from "@mui/material/BottomNavigation";
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import SwipeIcon from "@mui/icons-material/Swipe";
+import { Paper } from "@mui/material";
+import { useState } from "react";
+import Discovering from "./components/Discovering";
+import My from "./components/My";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function SimpleBottomNavigation() {
+  const [value, setValue] = useState<"discovering" | "my">("discovering");
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+    <Box>
+      {value === "discovering" ? <Discovering /> : <My />}
+      <Paper
+        sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
+        elevation={3}
+      >
+        <BottomNavigation
+          showLabels
+          value={value}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+          }}
+        >
+          <BottomNavigationAction
+            value="discovering"
+            label="发现"
+            icon={<SwipeIcon />}
+          />
+          <BottomNavigationAction
+            value="my"
+            label="我的"
+            icon={<AccountCircleIcon />}
+          />
+        </BottomNavigation>
+      </Paper>
+    </Box>
+  );
 }
-
-export default App
